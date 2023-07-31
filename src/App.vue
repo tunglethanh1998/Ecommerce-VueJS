@@ -2,9 +2,9 @@
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { RouterView } from 'vue-router'
 
-import Header from '@/components/templates/header.vue'
-import Footer from '@/components/templates/Footer.vue'
-import Cart from '@/components/organisms/Cart.vue'
+import HeaderComponent from './components/templates/HeaderComponent.vue'
+import FooterComponent from './components/templates/FooterComponent.vue'
+import CartOverlay from './components/organisms/CartOverlay.vue'
 
 const isShowCart = ref(false)
 const isFirstShow = ref(true)
@@ -33,10 +33,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <Header @onOpenCart="onToggleCart"></Header>
+  <HeaderComponent @onOpenCart="onToggleCart"></HeaderComponent>
   <RouterView />
-  <Footer></Footer>
-  <Cart :isShowCart="isShowCart" @onCloseCart="onToggleCart" ref="cartRef" />
+  <FooterComponent></FooterComponent>
+  <CartOverlay :isShowCart="isShowCart" @onCloseCart="onToggleCart" ref="cartRef" />
 </template>
 
 <style scoped></style>
