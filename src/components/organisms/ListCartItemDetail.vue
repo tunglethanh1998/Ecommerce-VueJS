@@ -11,6 +11,7 @@
       <CartItemDetail
         v-for="item in computedListCart"
         :key="item.id"
+        :id="item.id"
         :imgSrc="item.imgSrc"
         :title="item.title"
         :unitPrice="item.unitPrice"
@@ -21,13 +22,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import CartItemDetail from '../molecules/CartItemDetail.vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
-
-const listCart = ref(store.state.listCart)
-
-const computedListCart = computed(() => listCart.value)
+const computedListCart = computed(() => store.state.listCart)
 </script>

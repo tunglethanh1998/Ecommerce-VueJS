@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import HomeView from '@/views/HomeView.vue'
 import CartDetails from '@/views/CartDetails.vue'
+import CheckoutView from '@/views/CheckoutView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/cart-details',
       name: 'cart detail',
       component: CartDetails
+    },
+    {
+      path: '/check-out',
+      name: 'checkout',
+      component: CheckoutView
     }
   ]
 })

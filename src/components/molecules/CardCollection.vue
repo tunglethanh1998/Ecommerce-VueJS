@@ -32,34 +32,11 @@
       <a
         rel="nofollow"
         class="wp-block-button__link wp-element-button add_to_cart_button ajax_add_to_cart"
+        :class="isLoadingCart && 'loading'"
         @click="onAddToCart"
       >
         Add to cart
       </a>
-    </div>
-
-    <div
-      class="yith-wcwl-add-to-wishlist add-to-wishlist-288 wishlist-fragment on-first-load"
-      data-fragment-ref="288"
-      data-fragment-options='{"base_url":"","in_default_wishlist":false,"is_single":false,"show_exists":false,"product_id":"288","parent_product_id":288,"product_type":"simple","show_view":false,"browse_wishlist_text":"Browse wishlist","already_in_wishslist_text":"The product is already in your wishlist!","product_added_text":"Product added!","heading_icon":"fa-heart-o","available_multi_wishlist":false,"disable_wishlist":false,"show_count":false,"ajax_loading":false,"loop_position":"before_image","item":"add_to_wishlist"}'
-    >
-      <!-- ADD TO WISHLIST -->
-
-      <div class="yith-wcwl-add-button">
-        <a
-          href="?add_to_wishlist=288&amp;_wpnonce=9d911b4eec"
-          class="add_to_wishlist single_add_to_wishlist button alt"
-          data-product-id="288"
-          data-product-type="simple"
-          data-original-product-id="288"
-          data-title="Add to wishlist"
-          rel="nofollow"
-        >
-          <i class="yith-wcwl-icon fa fa-heart-o"></i> <span>Add to wishlist</span>
-        </a>
-      </div>
-
-      <!-- COUNT TEXT -->
     </div>
   </li>
 </template>
@@ -67,6 +44,11 @@
 <script>
 export default {
   name: 'CardCollection',
+  data: function() {
+    return {
+      isLoadingCart: false
+    }
+  },
   props: {
     id: String,
     imgSrc: String,
@@ -82,7 +64,11 @@ export default {
         unitPrice: this.unitPrice,
         quantity: 1
       }
-      this.$store.dispatch('onAddToCartAction', payload)
+      this.isLoadingCart = true
+      setTimeout(() => {
+        this.$store.dispatch('onAddToCartAction', payload)
+        this.isLoadingCart = false
+      }, 1000)
     }
   }
 }

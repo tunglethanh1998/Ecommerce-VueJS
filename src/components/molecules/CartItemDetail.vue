@@ -43,12 +43,14 @@
               aria-label="Reduce quantity of Soft Teddy Bear"
               class="wc-block-components-quantity-selector__button wc-block-components-quantity-selector__button--minus"
               :disabled="props.quantity === 1"
+              @click="onRemoveQuantity"
             >
               －
             </button>
             <button
               aria-label="Increase quantity of Soft Teddy Bear"
               class="wc-block-components-quantity-selector__button wc-block-components-quantity-selector__button--plus"
+              @click="onAddQuantity"
             >
               ＋
             </button>
@@ -56,6 +58,7 @@
           <button
             class="wc-block-cart-item__remove-link"
             aria-label="Remove Soft Teddy Bear from cart"
+            @click="onRemoveItemCart"
           >
             Remove item
           </button>
@@ -68,7 +71,7 @@
           <span
             class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value"
           >
-            $50.00
+            ${{ totalPrice }}.00
           </span>
         </span>
       </div>
@@ -77,5 +80,24 @@
 </template>
 
 <script setup>
-const props = defineProps(['imgSrc', 'title', 'unitPrice', 'quantity'])
+import { computed } from 'vue';
+import { useStore } from 'vuex'
+
+const store = useStore()
+const props = defineProps(['id', 'imgSrc', 'title', 'unitPrice', 'quantity'])
+
+const totalPrice = computed(() => props.unitPrice * props.quantity)
+
+const onAddQuantity = () => {
+  store.dispatch('onAddQuantityAction', props.id)
+}
+
+const onRemoveQuantity = () => {
+  store.dispatch('onRemoveQuantityAction', props.id)
+}
+
+const onRemoveItemCart = () => {
+  store.dispatch('onRemoveItemCartAction', props.id)
+}
+
 </script>

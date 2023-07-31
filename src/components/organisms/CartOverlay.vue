@@ -89,7 +89,7 @@
                     <span class="wc-block-components-button__text">View my cart</span>
                   </router-link>
                   <router-link
-                    to="/cart-details"
+                    to="/check-out"
                     class="components-button wc-block-components-button wp-element-button wc-block-mini-cart__footer-checkout contained"
                   >
                     <span class="wc-block-components-button__text">Go to checkout</span>
