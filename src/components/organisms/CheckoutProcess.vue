@@ -1,3 +1,20 @@
+<script setup>
+import CartSummarize from '../molecules/CartSummarize.vue'
+
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const computedListCart = computed(() => store.state.listCart)
+const calSubTotal = computed(() => {
+  let subTotal = 0
+  store.getters.getCarts.forEach((cart) => {
+    subTotal += parseInt(cart.unitPrice, 10) * parseInt(cart.quantity, 10)
+  })
+  return subTotal
+})
+</script>
+
 <template>
   <div
     class="is-layout-flow wp-block-group has-background-background-color has-background"
@@ -66,7 +83,8 @@
                         aria-invalid="false"
                         title=""
                         value=""
-                      /><label for="email">Email address</label>
+                        placeholder="Email address"
+                      />
                     </div>
                   </div>
                 </div>
@@ -113,7 +131,8 @@
                           aria-invalid="false"
                           title=""
                           value=""
-                        /><label for="billing-first_name">First name</label>
+                          placeholder="First name"
+                        />
                       </div>
                       <div
                         class="wc-block-components-text-input wc-block-components-address-form__last_name"
@@ -127,7 +146,8 @@
                           aria-invalid="false"
                           title=""
                           value=""
-                        /><label for="billing-last_name">Last name</label>
+                          placeholder="Last name"
+                        />
                       </div>
                       <div
                         class="wc-block-components-text-input wc-block-components-address-form__address_1"
@@ -141,144 +161,8 @@
                           aria-invalid="false"
                           title=""
                           value=""
-                        /><label for="billing-address_1">Address</label>
-                      </div>
-                      <div
-                        class="wc-block-components-text-input wc-block-components-address-form__address_2"
-                      >
-                        <input
-                          type="text"
-                          id="billing-address_2"
-                          autocapitalize="sentences"
-                          autocomplete="address-line2"
-                          aria-label="Apartment, suite, etc. (optional)"
-                          aria-invalid="false"
-                          title=""
-                          value=""
-                        /><label for="billing-address_2">Apartment, suite, etc. (optional)</label>
-                      </div>
-                      <div class="wc-block-components-country-input">
-                        <div id="billing-country" class="wc-block-components-combobox is-active">
-                          <div>
-                            <div
-                              class="components-base-control wc-block-components-combobox-control components-combobox-control css-1wzzj1a e1puf3u3"
-                            >
-                              <div class="components-base-control__field css-1kyqli5 e1puf3u2">
-                                <label
-                                  class="components-base-control__label css-4dk55l e1puf3u1"
-                                  for="components-form-token-input-0"
-                                  >Country/Region</label
-                                >
-                                <div
-                                  class="components-combobox-control__suggestions-container"
-                                  tabindex="-1"
-                                >
-                                  <div
-                                    data-wp-c16t="true"
-                                    data-wp-component="Flex"
-                                    class="components-flex css-dfwk0q css-0 em57xhy0"
-                                  >
-                                    <div
-                                      data-wp-c16t="true"
-                                      data-wp-component="FlexBlock"
-                                      class="components-flex-item components-flex-block css-106zala css-0 em57xhy0"
-                                    >
-                                      <input
-                                        id="components-form-token-input-0"
-                                        type="text"
-                                        aria-label="United States (US), Country/Region"
-                                        size="19"
-                                        class="components-combobox-control__input components-form-token-field__input"
-                                        autocomplete="off"
-                                        role="combobox"
-                                        aria-expanded="false"
-                                        aria-autocomplete="list"
-                                        aria-describedby="components-form-token-suggestions-howto-0"
-                                        value="United States (US)"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="wc-block-components-text-input wc-block-components-address-form__city"
-                      >
-                        <input
-                          type="text"
-                          id="billing-city"
-                          autocapitalize="sentences"
-                          autocomplete="address-level2"
-                          aria-label="City"
-                          aria-invalid="false"
-                          title=""
-                          value=""
-                        /><label for="billing-city">City</label>
-                      </div>
-                      <div
-                        id="billing-state"
-                        class="wc-block-components-combobox wc-block-components-state-input is-active"
-                      >
-                        <div>
-                          <div
-                            class="components-base-control wc-block-components-combobox-control components-combobox-control css-1wzzj1a e1puf3u3"
-                          >
-                            <div class="components-base-control__field css-1kyqli5 e1puf3u2">
-                              <label
-                                class="components-base-control__label css-4dk55l e1puf3u1"
-                                for="components-form-token-input-1"
-                                >State</label
-                              >
-                              <div
-                                class="components-combobox-control__suggestions-container"
-                                tabindex="-1"
-                              >
-                                <div
-                                  data-wp-c16t="true"
-                                  data-wp-component="Flex"
-                                  class="components-flex css-dfwk0q css-0 em57xhy0"
-                                >
-                                  <div
-                                    data-wp-c16t="true"
-                                    data-wp-component="FlexBlock"
-                                    class="components-flex-item components-flex-block css-106zala css-0 em57xhy0"
-                                  >
-                                    <input
-                                      id="components-form-token-input-1"
-                                      type="text"
-                                      aria-label="California, State"
-                                      size="11"
-                                      class="components-combobox-control__input components-form-token-field__input"
-                                      autocomplete="off"
-                                      role="combobox"
-                                      aria-expanded="false"
-                                      aria-autocomplete="list"
-                                      aria-describedby="components-form-token-suggestions-howto-1"
-                                      value="California"
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="wc-block-components-text-input wc-block-components-address-form__postcode"
-                      >
-                        <input
-                          type="text"
-                          id="billing-postcode"
-                          autocapitalize="characters"
-                          autocomplete="postal-code"
-                          aria-label="ZIP Code"
-                          aria-invalid="false"
-                          title=""
-                          value=""
-                        /><label for="billing-postcode">ZIP Code</label>
+                          placeholder="Address"
+                        />
                       </div>
                     </div>
                     <div class="wc-block-components-text-input">
@@ -287,75 +171,16 @@
                         id="billing-phone"
                         autocapitalize="off"
                         autocomplete="tel"
-                        aria-label="Phone (optional)"
+                        aria-label="Phone"
                         aria-invalid="false"
                         title=""
                         value=""
-                      /><label for="billing-phone">Phone (optional)</label>
+                        placeholder="Phone"
+                      />
                     </div>
                   </div>
                 </div>
               </fieldset>
-
-              <fieldset
-                class="wc-block-checkout__payment-method wp-block-woocommerce-checkout-payment-block wc-block-components-checkout-step wc-block-components-checkout-step--with-step-number"
-                id="payment-method"
-              >
-                <legend class="screen-reader-text">Payment options</legend>
-                <div class="wc-block-components-checkout-step__heading">
-                  <h2
-                    class="wc-block-components-title wc-block-components-checkout-step__title"
-                    aria-hidden="true"
-                  >
-                    Payment options
-                  </h2>
-                </div>
-                <div class="wc-block-components-checkout-step__container">
-                  <div class="wc-block-components-checkout-step__content">
-                    <div
-                      class="wc-block-checkout__no-payment-methods-notice woocommerce-message woocommerce-error components-notice is-info"
-                    >
-                      <div class="components-notice__content">
-                        There are no payment methods available. This may be an error on our side.
-                        Please contact us if you need any help placing your order.
-                        <div class="components-notice__actions"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-
-              <div
-                class="wc-block-checkout__order-notes wp-block-woocommerce-checkout-order-note-block wc-block-components-checkout-step"
-                id="order-notes"
-              >
-                <div class="wc-block-components-checkout-step__container">
-                  <div class="wc-block-components-checkout-step__content">
-                    <div class="wc-block-checkout__add-note">
-                      <div class="wc-block-components-checkbox">
-                        <label for="checkbox-control-0"
-                          ><input
-                            id="checkbox-control-0"
-                            class="wc-block-components-checkbox__input"
-                            type="checkbox"
-                            aria-invalid="false"
-                          /><svg
-                            class="wc-block-components-checkbox__mark"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 20"
-                          >
-                            <path
-                              d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
-                            ></path></svg><span class="wc-block-components-checkbox__label"
-                            >Add a note to your order</span
-                          ></label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               <div class="wc-block-checkout__terms wp-block-woocommerce-checkout-terms-block">
                 <span
@@ -366,10 +191,11 @@
 
               <div class="wc-block-checkout__actions wp-block-woocommerce-checkout-actions-block">
                 <div class="wc-block-checkout__actions_row">
-                  <a
-                    href="https://themegrilldemos.com/blissful/cart/"
+                  <router-link
+                    to="/cart-details"
                     class="wc-block-components-checkout-return-to-cart-button"
-                    ><svg
+                  >
+                    <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       width="24"
@@ -377,10 +203,11 @@
                       aria-hidden="true"
                       focusable="false"
                     >
-                      <path
-                        d="M20 10.8H6.7l4.1-4.5-1.1-1.1-5.8 6.3 5.8 5.8 1.1-1.1-4-3.9H20z"
-                      ></path></svg>Return to Cart</a
-                  ><button
+                    <path
+                      d="M20 10.8H6.7l4.1-4.5-1.1-1.1-5.8 6.3 5.8 5.8 1.1-1.1-4-3.9H20z"
+                    ></path></svg>Return to Cart
+                  </router-link>
+                  <button
                     type="button"
                     class="components-button wc-block-components-button wp-element-button wc-block-components-checkout-place-order-button contained"
                   >
@@ -415,231 +242,14 @@
                   </h2>
                   <div class="wc-block-components-panel__content">
                     <div class="wc-block-components-order-summary__content">
-                      <div class="wc-block-components-order-summary-item">
-                        <div class="wc-block-components-order-summary-item__image">
-                          <div class="wc-block-components-order-summary-item__quantity">
-                            <span aria-hidden="true">2</span
-                            ><span class="screen-reader-text">2 items</span>
-                          </div>
-                          <img
-                            class="wc-block-components-product-image"
-                            src="https://themegrilldemos.com/blissful/wp-content/uploads/sites/193/2023/03/teddy-bear-300x408.jpg"
-                            alt="Soft Teddy Bear"
-                          />
-                        </div>
-                        <div class="wc-block-components-order-summary-item__description">
-                          <span class="wc-block-components-product-name">Soft Teddy Bear</span
-                          ><span
-                            class="wc-block-components-order-summary-item__individual-prices price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value wc-block-components-order-summary-item__individual-price"
-                              >$50.00</span
-                            ></span
-                          >
-                          <div class="wc-block-components-product-metadata">
-                            <div class="wc-block-components-product-metadata__description">
-                              <p>
-                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                                Curabitur aliquet am id dui posuere blandit…
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <span class="screen-reader-text"
-                          >Total price for 2 Soft Teddy Bear items: $100.00</span
-                        >
-                        <div
-                          class="wc-block-components-order-summary-item__total-price"
-                          aria-hidden="true"
-                        >
-                          <span class="price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value"
-                              >$100.00</span
-                            ></span
-                          >
-                        </div>
-                      </div>
-                      <div class="wc-block-components-order-summary-item">
-                        <div class="wc-block-components-order-summary-item__image">
-                          <div class="wc-block-components-order-summary-item__quantity">
-                            <span aria-hidden="true">1</span
-                            ><span class="screen-reader-text">1 item</span>
-                          </div>
-                          <img
-                            class="wc-block-components-product-image"
-                            src="https://themegrilldemos.com/blissful/wp-content/uploads/sites/193/2023/03/handmade-ceramic-cup-300x408.jpg"
-                            alt="Handmade Ceramic Cup"
-                          />
-                        </div>
-                        <div class="wc-block-components-order-summary-item__description">
-                          <span class="wc-block-components-product-name">Handmade Ceramic Cup</span
-                          ><span
-                            class="wc-block-components-order-summary-item__individual-prices price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value wc-block-components-order-summary-item__individual-price"
-                              >$20.00</span
-                            ></span
-                          >
-                          <div class="wc-block-components-product-metadata">
-                            <div class="wc-block-components-product-metadata__description">
-                              <p>
-                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                                Curabitur aliquet am id dui posuere blandit…
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <span class="screen-reader-text"
-                          >Total price for 1 Handmade Ceramic Cup item: $20.00</span
-                        >
-                        <div
-                          class="wc-block-components-order-summary-item__total-price"
-                          aria-hidden="true"
-                        >
-                          <span class="price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value"
-                              >$20.00</span
-                            ></span
-                          >
-                        </div>
-                      </div>
-                      <div class="wc-block-components-order-summary-item">
-                        <div class="wc-block-components-order-summary-item__image">
-                          <div class="wc-block-components-order-summary-item__quantity">
-                            <span aria-hidden="true">1</span
-                            ><span class="screen-reader-text">1 item</span>
-                          </div>
-                          <img
-                            class="wc-block-components-product-image"
-                            src="https://themegrilldemos.com/blissful/wp-content/uploads/sites/193/2023/03/egg-chocolate-300x408.jpg"
-                            alt="Egg Chocolate"
-                          />
-                        </div>
-                        <div class="wc-block-components-order-summary-item__description">
-                          <span class="wc-block-components-product-name">Egg Chocolate</span
-                          ><span
-                            class="wc-block-components-order-summary-item__individual-prices price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value wc-block-components-order-summary-item__individual-price"
-                              >$45.00</span
-                            ></span
-                          >
-                          <div class="wc-block-components-product-metadata">
-                            <div class="wc-block-components-product-metadata__description">
-                              <p>
-                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                                Curabitur aliquet am id dui posuere blandit…
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <span class="screen-reader-text"
-                          >Total price for 1 Egg Chocolate item: $45.00</span
-                        >
-                        <div
-                          class="wc-block-components-order-summary-item__total-price"
-                          aria-hidden="true"
-                        >
-                          <span class="price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value"
-                              >$45.00</span
-                            ></span
-                          >
-                        </div>
-                      </div>
-                      <div class="wc-block-components-order-summary-item">
-                        <div class="wc-block-components-order-summary-item__image">
-                          <div class="wc-block-components-order-summary-item__quantity">
-                            <span aria-hidden="true">2</span
-                            ><span class="screen-reader-text">2 items</span>
-                          </div>
-                          <img
-                            class="wc-block-components-product-image"
-                            src="https://themegrilldemos.com/blissful/wp-content/uploads/sites/193/2023/03/customized-rings-300x408.jpg"
-                            alt="Customized Rings"
-                          />
-                        </div>
-                        <div class="wc-block-components-order-summary-item__description">
-                          <span class="wc-block-components-product-name">Customized Rings</span
-                          ><span
-                            class="wc-block-components-order-summary-item__individual-prices price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value wc-block-components-order-summary-item__individual-price"
-                              >$85.00</span
-                            ></span
-                          >
-                          <div class="wc-block-components-product-metadata">
-                            <div class="wc-block-components-product-metadata__description">
-                              <p>
-                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                                Curabitur aliquet am id dui posuere blandit…
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <span class="screen-reader-text"
-                          >Total price for 2 Customized Rings items: $170.00</span
-                        >
-                        <div
-                          class="wc-block-components-order-summary-item__total-price"
-                          aria-hidden="true"
-                        >
-                          <span class="price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value"
-                              >$170.00</span
-                            ></span
-                          >
-                        </div>
-                      </div>
-                      <div class="wc-block-components-order-summary-item">
-                        <div class="wc-block-components-order-summary-item__image">
-                          <div class="wc-block-components-order-summary-item__quantity">
-                            <span aria-hidden="true">1</span
-                            ><span class="screen-reader-text">1 item</span>
-                          </div>
-                          <img
-                            class="wc-block-components-product-image"
-                            src="https://themegrilldemos.com/blissful/wp-content/uploads/sites/193/2023/03/vase-with-roses-300x408.jpg"
-                            alt="Roses with vase"
-                          />
-                        </div>
-                        <div class="wc-block-components-order-summary-item__description">
-                          <span class="wc-block-components-product-name">Roses with vase</span
-                          ><span
-                            class="wc-block-components-order-summary-item__individual-prices price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value wc-block-components-order-summary-item__individual-price"
-                              >$85.00</span
-                            ></span
-                          >
-                          <div class="wc-block-components-product-metadata">
-                            <div class="wc-block-components-product-metadata__description">
-                              <p>
-                                Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                                Curabitur aliquet am id dui posuere blandit…
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <span class="screen-reader-text"
-                          >Total price for 1 Roses with vase item: $85.00</span
-                        >
-                        <div
-                          class="wc-block-components-order-summary-item__total-price"
-                          aria-hidden="true"
-                        >
-                          <span class="price wc-block-components-product-price"
-                            ><span
-                              class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-product-price__value"
-                              >$85.00</span
-                            ></span
-                          >
-                        </div>
-                      </div>
+                      <CartSummarize
+                        v-for="item in computedListCart"
+                        :key="item.id"
+                        :imgSrc="item.imgSrc"
+                        :title="item.title"
+                        :quantity="item.quantity"
+                        :unitPrice="item.unitPrice"
+                      />
                     </div>
                   </div>
                 </div>
@@ -649,13 +259,6 @@
                 class="wp-block-woocommerce-checkout-order-summary-coupon-form-block wc-block-components-totals-wrapper"
               >
                 <div class="wc-block-components-totals-coupon">
-                  <a
-                    role="button"
-                    href="#wc-block-components-totals-coupon__form"
-                    class="wc-block-components-totals-coupon-link"
-                    aria-label="Add a coupon"
-                    >Add a coupon</a
-                  >
                   <div class="">
                     <div class="" aria-hidden="false">
                       <div class="wc-block-components-totals-coupon__content screen-reader-text">
@@ -700,7 +303,7 @@
                   <span class="wc-block-components-totals-item__label">Subtotal</span
                   ><span
                     class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-totals-item__value"
-                    >$420.00</span
+                    >${{ calSubTotal }}.00</span
                   >
                   <div class="wc-block-components-totals-item__description"></div>
                 </div>
@@ -719,7 +322,7 @@
                   <span class="wc-block-components-totals-item__label">Total</span
                   ><span
                     class="wc-block-formatted-money-amount wc-block-components-formatted-money-amount wc-block-components-totals-item__value"
-                    >$420.00</span
+                    >${{ calSubTotal }}.00</span
                   >
                   <div class="wc-block-components-totals-item__description"></div>
                 </div>

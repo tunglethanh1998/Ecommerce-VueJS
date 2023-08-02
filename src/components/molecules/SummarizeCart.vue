@@ -98,12 +98,12 @@
         style="inset: 0px; opacity: 0; pointer-events: none; position: absolute; z-index: -1"
       ></div>
       <div class="wc-block-cart__submit-container">
-        <a
-          href="https://themegrilldemos.com/blissful/checkout/"
+        <router-link
+          to="/check-out"
           class="components-button wc-block-components-button wp-element-button wc-block-cart__submit-button contained"
         >
           <span class="wc-block-components-button__text">Proceed to Checkout</span>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
