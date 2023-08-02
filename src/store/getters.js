@@ -4,5 +4,8 @@ export default {
   },
   getAllProducts: (state) => {
     return state.listProducts
+  },
+  getAuth: (state) => {
+    return state.auth
   }
 }

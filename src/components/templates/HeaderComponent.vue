@@ -28,7 +28,7 @@
                 style="padding-top: 20px; padding-bottom: 20px"
               >
                 <h3 class="has-text-align-center wp-block-site-title">
-                  <a href="/" target="_self" rel="home" aria-current="page">Blissful.</a>
+                  <router-link to="/" rel="home" aria-current="page">Blissful.</router-link>
                 </h3>
               </div>
             </div>
@@ -574,10 +574,15 @@
                     aria-label="Woocommerce Menu"
                   >
                     <ul class="wp-block-navigation__container">
-                      <li class="wp-block-navigation-item blissful-avatar wp-block-navigation-link">
-                        <a class="wp-block-navigation-item__content" href="/blissful/my-account/"
-                          ><span class="wp-block-navigation-item__label">My account</span></a
-                        >
+                      <li v-if="isAuth" class="wp-block-navigation-item blissful-avatar wp-block-navigation-link">
+                        <router-link class="wp-block-navigation-item__content" to="/profile">
+                          <span class="wp-block-navigation-item__label">My account</span>
+                        </router-link>
+                      </li>
+                      <li v-if="!isAuth" class="wp-block-navigation-item wp-block-navigation-link sign-in-button">
+                        <router-link class="wp-block-navigation-item__content" to="/sign-in">
+                          Sign In
+                        </router-link>
                       </li>
                       <li
                         class="wp-block-navigation-item blissful-wishlist-icon wp-block-navigation-link"
@@ -646,7 +651,14 @@
   </header>
 </template>
 
-<style scoped></style>
+<style scoped>
+.sign-in-button {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+</style>
 
 <script>
 export default {
@@ -659,6 +671,9 @@ export default {
   computed: {
     getListCarts() {
       return this.$store.getters.getCarts
+    },
+    isAuth() {
+      return this.$store.getters.getAuth.isAuth
     }
   }
 }

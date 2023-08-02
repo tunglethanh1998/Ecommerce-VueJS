@@ -1,1 +1,2 @@
 export const CART_STORAGE = 'CART_STORAGE'
+export const AUTHORIZATION = 'AUTHORIZATION'

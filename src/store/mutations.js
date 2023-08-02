@@ -1,3 +1,5 @@
+import { useRouter, useRoute } from 'vue-router'
+
 import { CART_STORAGE } from '../constants'
 import { onSetLocalStorage } from '../utils/localStorage'
 
@@ -38,5 +40,20 @@ export default {
     if (listProducts.length) {
       state.listProducts = listProducts
     }
-  }
+  },
+  onSignInMutation(state, data) {
+    state.auth.isAuth = true
+    state.auth.accessToken = data.accessToken
+    state.auth.refreshToken = data.refreshToken
+  },
+  onSignUpMutation(state, data) {
+    state.auth.isAuth = true
+    state.auth.accessToken = data.accessToken
+    state.auth.refreshToken = data.accessToken
+  },
+  onGetSessionMutation(state, data) {
+    state.auth.isAuth = true
+    state.auth.accessToken = data.accessToken
+    state.auth.refreshToken = data.accessToken
+  },
 }

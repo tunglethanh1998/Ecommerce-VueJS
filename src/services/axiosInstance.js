@@ -1,24 +1,30 @@
-import axios from 'axios';
+import axios from 'axios'
+import { onGetLocalStorage } from '../utils/localStorage'
+import { AUTHORIZATION } from '../constants'
 
 const axiosApiInstance = axios.create({
-  baseURL: `http://mark.io.vn:3000`
-});
+  baseURL: 'http://mark.io.vn:4000',
+  headers: {
+    Authorization: onGetLocalStorage(AUTHORIZATION) ? `Bearer ${onGetLocalStorage(AUTHORIZATION).accessToken}` : '',
+    'Content-Type': 'application/json' // Example of setting a default content type
+  }
+})
 
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
-  config => {
-    return config;
+  (config) => {
+    return config
   },
-  error => {
-    Promise.reject(error);
+  (error) => {
+    Promise.reject(error)
   }
-);
+)
 // Response interceptor for API calls
 axiosApiInstance.interceptors.response.use(
-  res => res,
-  err => {
-    return Promise.reject(err);
+  (res) => res,
+  (err) => {
+    return Promise.reject(err)
   }
-);
+)
 
-export default axiosApiInstance;
+export default axiosApiInstance
