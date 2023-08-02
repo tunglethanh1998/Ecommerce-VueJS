@@ -7,6 +7,8 @@ import SignUpView from '@/views/SignUpView.vue'
 import CartDetails from '@/views/CartDetails.vue'
 import CheckoutView from '@/views/CheckoutView.vue'
 
+import store from '../store/index'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,12 +25,26 @@ const router = createRouter({
     {
       path: '/check-out',
       name: 'checkout',
-      component: CheckoutView
+      component: CheckoutView,
+      beforeEnter: (to, from, next) => {
+        if (store.getters.getAuth.isAuth) {
+          next();
+        } else {
+          next('/sign-in');
+        }
+      },
     },
     {
       path: '/sign-in',
       name: 'sign-in',
-      component: SignInView
+      component: SignInView,
+      beforeEnter: (to, from, next) => {
+        if (store.getters.getAuth.isAuth) {
+          next('/');
+        } else {
+          next();
+        }
+      }
     },
     {
       path: '/sign-up',
@@ -38,7 +54,14 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: ProfileView,
+      beforeEnter: (to, from, next) => {
+        if (store.getters.getAuth.isAuth) {
+          next();
+        } else {
+          next('/sign-in');
+        }
+      }
     },
   ]
 })
