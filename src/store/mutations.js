@@ -43,6 +43,7 @@ export default {
     state.auth.isAuth = true
     state.auth.accessToken = data.accessToken
     state.auth.refreshToken = data.refreshToken
+    state.auth.profile = data.profile
   },
   onSignUpMutation(state, data) {
     state.auth.isAuth = true
