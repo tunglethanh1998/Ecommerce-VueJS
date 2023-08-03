@@ -1,10 +1,19 @@
 <script setup>
 import CartSummarize from '../molecules/CartSummarize.vue'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router';
+
+const email = ref()
+const firstName = ref()
+const lastName = ref()
+const address = ref()
+const phone = ref()
 
 const store = useStore()
+const router = useRouter()
+
 const computedListCart = computed(() => store.state.listCart)
 const calSubTotal = computed(() => {
   let subTotal = 0
@@ -13,6 +22,27 @@ const calSubTotal = computed(() => {
   })
   return subTotal
 })
+
+const placeOrder = () => {
+  const payload = {
+    email: email.value,
+    firstName: firstName.value,
+    lastName: lastName.value,
+    address: address.value,
+    phone: phone.value,
+    items: store.getters.getCarts.map((cart) => ({
+      name: cart.title,
+      imgSrc: cart.imgSrc,
+      quantity: cart.quantity,
+      unitPrice: cart.unitPrice
+    }))
+  }
+  store.dispatch('onPlaceOrderAction', payload).then((res) => {
+    if (res.status === 201) {
+      router.push('/')
+    }
+  })
+}
 </script>
 
 <template>
@@ -74,17 +104,7 @@ const calSubTotal = computed(() => {
                   </p>
                   <div class="wc-block-components-checkout-step__content">
                     <div class="wc-block-components-text-input">
-                      <input
-                        type="email"
-                        id="email"
-                        autocapitalize="off"
-                        autocomplete="email"
-                        aria-label="Email address"
-                        aria-invalid="false"
-                        title=""
-                        value=""
-                        placeholder="Email address"
-                      />
+                      <input type="email" id="email" placeholder="Email address" v-model="email" />
                     </div>
                   </div>
                 </div>
@@ -129,9 +149,8 @@ const calSubTotal = computed(() => {
                           autocomplete="given-name"
                           aria-label="First name"
                           aria-invalid="false"
-                          title=""
-                          value=""
                           placeholder="First name"
+                          v-model="firstName"
                         />
                       </div>
                       <div
@@ -144,9 +163,8 @@ const calSubTotal = computed(() => {
                           autocomplete="family-name"
                           aria-label="Last name"
                           aria-invalid="false"
-                          title=""
-                          value=""
                           placeholder="Last name"
+                          v-model="lastName"
                         />
                       </div>
                       <div
@@ -159,9 +177,8 @@ const calSubTotal = computed(() => {
                           autocomplete="address-line1"
                           aria-label="Address"
                           aria-invalid="false"
-                          title=""
-                          value=""
                           placeholder="Address"
+                          v-model="address"
                         />
                       </div>
                     </div>
@@ -173,9 +190,8 @@ const calSubTotal = computed(() => {
                         autocomplete="tel"
                         aria-label="Phone"
                         aria-invalid="false"
-                        title=""
-                        value=""
                         placeholder="Phone"
+                        v-model="phone"
                       />
                     </div>
                   </div>
@@ -203,13 +219,15 @@ const calSubTotal = computed(() => {
                       aria-hidden="true"
                       focusable="false"
                     >
-                    <path
-                      d="M20 10.8H6.7l4.1-4.5-1.1-1.1-5.8 6.3 5.8 5.8 1.1-1.1-4-3.9H20z"
-                    ></path></svg>Return to Cart
+                      <path
+                        d="M20 10.8H6.7l4.1-4.5-1.1-1.1-5.8 6.3 5.8 5.8 1.1-1.1-4-3.9H20z"
+                      ></path></svg
+                    >Return to Cart
                   </router-link>
                   <button
                     type="button"
                     class="components-button wc-block-components-button wp-element-button wc-block-components-checkout-place-order-button contained"
+                    @click="placeOrder"
                   >
                     <span class="wc-block-components-button__text">Place Order</span>
                   </button>
@@ -236,7 +254,9 @@ const calSubTotal = computed(() => {
                         class="wc-block-components-panel__button-icon"
                         focusable="false"
                       >
-                        <path d="M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"></path></svg><span class="wc-block-components-order-summary__button-text">Order summary</span
+                        <path d="M6.5 12.4L12 8l5.5 4.4-.9 1.2L12 10l-4.5 3.6-1-1.2z"></path></svg
+                      ><span class="wc-block-components-order-summary__button-text"
+                        >Order summary</span
                       >
                     </button>
                   </h2>

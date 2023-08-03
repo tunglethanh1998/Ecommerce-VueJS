@@ -51,6 +51,17 @@ export default {
       console.error('Error fetching products:', error)
     }
   },
+  async onPlaceOrderAction({ commit }, payload) {
+    try {
+      const response = await axiosInstance.post('http://mark.io.vn:4000/order', payload)
+      if (response.status === 201) {
+        commit('onPlaceOrderMutation', response.data)
+      }
+      return response
+    } catch (error) {
+      console.error('Error fetching products:', error)
+    }
+  },
   onAddQuantityAction({ commit }, id) {
     commit('onAddQuantityMutation', id)
   },

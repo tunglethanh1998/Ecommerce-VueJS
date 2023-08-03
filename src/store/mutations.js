@@ -1,5 +1,3 @@
-import { useRouter, useRoute } from 'vue-router'
-
 import { CART_STORAGE } from '../constants'
 import { onSetLocalStorage } from '../utils/localStorage'
 
@@ -55,5 +53,9 @@ export default {
     state.auth.isAuth = true
     state.auth.accessToken = data.accessToken
     state.auth.refreshToken = data.accessToken
+  },
+  onPlaceOrderMutation(state) {
+    state.listCart = []
+    onSetLocalStorage(CART_STORAGE, [])
   },
 }
