@@ -51,11 +51,15 @@ export default {
   },
   onGetSessionMutation(state, data) {
     state.auth.isAuth = true
-    state.auth.accessToken = data.accessToken
-    state.auth.refreshToken = data.accessToken
+    state.auth.profile = {
+      ...data
+    }
   },
   onPlaceOrderMutation(state) {
     state.listCart = []
     onSetLocalStorage(CART_STORAGE, [])
+  },
+  onGetListOrderMutation(state, data) {
+    state.listOrder = data.orders
   },
 }

@@ -2,6 +2,7 @@
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { RouterView } from 'vue-router'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router';
 
 import HeaderComponent from './components/templates/HeaderComponent.vue'
 import FooterComponent from './components/templates/FooterComponent.vue'
@@ -11,6 +12,7 @@ const isShowCart = ref(false)
 const isFirstShow = ref(true)
 const cartRef = ref(null)
 const store = useStore()
+const router = useRouter()
 
 const onToggleCart = () => {
   isShowCart.value = !isShowCart.value
@@ -27,7 +29,11 @@ const handleClickOutside = (event) => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  store.dispatch('onGetSessionAction')
+  store.dispatch('onGetSessionAction').then((res) => {
+    if (res.status === 200) {
+      router.push('/')
+    }
+  })
 })
 
 onBeforeUnmount(() => {

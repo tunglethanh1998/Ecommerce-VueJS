@@ -9,5 +9,6 @@ export default {
     profile: {}
   },
   listCart: onGetLocalStorage(CART_STORAGE),
-  listProducts: []
+  listProducts: [],
+  listOrder: []
 }

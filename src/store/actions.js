@@ -47,6 +47,7 @@ export default {
       if (response.status === 200) {
         commit('onGetSessionMutation', response.data)
       }
+      return response
     } catch (error) {
       console.error('Error fetching products:', error)
     }
@@ -56,6 +57,17 @@ export default {
       const response = await axiosInstance.post('http://mark.io.vn:4000/order', payload)
       if (response.status === 201) {
         commit('onPlaceOrderMutation', response.data)
+      }
+      return response
+    } catch (error) {
+      console.error('Error fetching products:', error)
+    }
+  },
+  async onGetListOrderAction({ commit }, email) {
+    try {
+      const response = await axiosInstance.get(`http://mark.io.vn:4000/order/${email}`)
+      if (response.status === 200) {
+        commit('onGetListOrderMutation', response.data)
       }
       return response
     } catch (error) {
