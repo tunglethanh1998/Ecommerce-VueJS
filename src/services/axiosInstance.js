@@ -3,9 +3,12 @@ import { onGetLocalStorage } from '../utils/localStorage'
 import { AUTHORIZATION } from '../constants'
 
 const axiosApiInstance = axios.create({
-  baseURL: 'https://af63-3-27-159-42.ngrok-free.app',
+  baseURL: 'https://66ca-3-27-159-42.ngrok-free.app',
   headers: {
-    Authorization: onGetLocalStorage(AUTHORIZATION) ? `Bearer ${onGetLocalStorage(AUTHORIZATION).accessToken}` : '',
+    Authorization: onGetLocalStorage(AUTHORIZATION)
+      ? `Bearer ${onGetLocalStorage(AUTHORIZATION).accessToken}`
+      : '',
+    'ngrok-skip-browser-warning': true,
     'Content-Type': 'application/json' // Example of setting a default content type
   }
 })
