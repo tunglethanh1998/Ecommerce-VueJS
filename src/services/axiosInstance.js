@@ -3,7 +3,7 @@ import { onGetLocalStorage } from '../utils/localStorage'
 import { AUTHORIZATION } from '../constants'
 
 const axiosApiInstance = axios.create({
-  baseURL: 'https://66ca-3-27-159-42.ngrok-free.app',
+  baseURL: 'https://5b15-3-27-159-42.ngrok-free.app',
   headers: {
     Authorization: onGetLocalStorage(AUTHORIZATION)
       ? `Bearer ${onGetLocalStorage(AUTHORIZATION).accessToken}`
